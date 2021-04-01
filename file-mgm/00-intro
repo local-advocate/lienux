@@ -14,6 +14,7 @@
 -  circular links to dirs would cause the file to be never be deleted [every dir is hardlinked to itself ln]
 -  soft links: dont point to fd but to file name (shortcuts) [if delete original file then all contents gone]
 
+
 => File operations:
 -  Basic    : create, delete, open, close, read, write, seek, etc.
 -  Metadata : links, attributes, owner, protection
@@ -37,3 +38,8 @@
 
 => close:
 -  remove entry for file, if count 0 remove system wide table
+
+
+=> Protection:
+-  Access control list (win): maintain list of all users that have access
+-  Permission bits: owner, group, everyone else (4:read, 2:write, 1:exec)
