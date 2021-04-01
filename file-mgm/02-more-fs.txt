@@ -1,0 +1,29 @@
+- file systems: maintaining files (sequence of bytes with actual data and other info for protection/identification. not contiguous)
+- file structure maintained in directory (pointers to next dir or file), maintain open file table per proc and sys wide
+- when opened ret ptr to file in mem, maintain info abt open file (access rights, etc.)
+- types: maintain types/format of files
+- file sharing: attrs include uid, gid, permissions for them
+- layered fs: proc->lib call->native sys call->vfs (translates sys calls between diff fs)->logical fs layer (search for file and det blocks)->file organization layer (map logical blocks to physical blocks)->basic fs layer (cache)->drivers (cache&req new data)->controllers (get data)->devices
+- logical blocks->disk blocks->disk sectors (sectors * n = blocks)
+- typical blocks: boot control block, volume sys info, pointers to file control block, fcbs
+- directories: linear list with hashed file names (cant have same file names)
+- file block allocation: 
+	- contiguous [can't grow, fast translations] (find byte with start + (disp) byte num/block size + (local block num) byste num % block size)
+	- linked list: next ptr, data [finding locations and random accesses slow] (find byte: [jumps] byte/(block size-ptr size) then [disp] (bytes / (block size - ptr size)) + ptr size)
+	- indexed allocation: one info block contains array of ptrs to all other data or info blocks [inodes/fcb keep info regarding each file and their info and data blocks]
+- on file change: dir entry removed, inode marked as free, blocks pointed by inode de-allocated [all transactions written to logs->logs to disk->transaction completed->logs removed]
+- network fs: remote access of files from server; sys call local->vfs local->nfs client->request->nfs server->vfs remote->sys call remote->file
+- extended fs: disk/partition in groups of blocks. group structure -> [[superblock in each group containing info about fs], [other blocks contain info about group descriptor table gdt or other groups], [bitmap in each grp for free info and inode bitmap for free inodes], [each grp has inode tables], [others data blocks]]
+
+- disks: pci buses->host controller->scsi or sata buses->disk controller. 
+- attached through i/o ports with interfaces (1 bus many devices/controllers)
+- cpu&ram->pcie->device[cards/host adapters]-->scsi/sata buses->scsi/sata controllers->io devices
+- Storage Area Network->Server or Network Area Stroage (NAS)->LAN/WAN->client
+- scheduling algorithms: first come first serve (fcfs), shortest seek time first (sstf) [nearby first. possible starvation of other requests], scan/elevator: one side to other seving requests in between then reverse, c-scan: move to other side w/o servicing requests (only serve in one dir move), c-look: c-scan but till last request not end direction
+- formatting: sectors [containing headers, data, error correcting code] [partition 1: MBR, partition 2: kernel, other: data]
+- booting: BIOS from ROM executed in CPU->CPU talk with disk controller->Master Boot Record (MBR) w/ info of boot code and partition table in memory executed->locate kernel partition->run boot code of parition in memory->kernel execution
+- block mapping: bad blocks mapped to spare good ones by controller [links/pointers in mapping table]
+- swap space mgm: create a separate disk partition [maintained in swap map info]
+- RAID: redundant array of individual disks. os->raid controller->disks
+- level [0: block striping&no redundancy] [1: mirroring/copying] [2: bit striping+err bits redundant error disks] [3: 2 but one even/odd parity bit. only one disk can fail] [4: 3 but block striping] [5: 4 but parity bits distirbuted throughout disks]
+
