@@ -1,0 +1,11 @@
+=> Layout:
+-  Number of concentric circles (tracks/cylinders)
+-  Within each track, there are sectors/blocks (minimumm transfer unit from disk)
+-  Stack on top of each other
+
+=> Info for files:
+-  Maintain structure to associate file with cylinder and sector
+-  Contiguous allocation: simple offset, but file cant grow
+-  Linked files: list of all free sectors/blocks. Fd points to first sec/blocl. In each sector keep a pointer to next sector. Disadvantage: Random access have to traverse list. (FAT, MS-DOS)
+-  Indexed files: file desciptor points to every sector/block (file descriptor size fixed). Max file size: size of file descriptor table.
+-  
