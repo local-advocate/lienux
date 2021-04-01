@@ -8,4 +8,7 @@
 -  Contiguous allocation: simple offset, but file cant grow
 -  Linked files: list of all free sectors/blocks. Fd points to first sec/blocl. In each sector keep a pointer to next sector. Disadvantage: Random access have to traverse list. (FAT, MS-DOS)
 -  Indexed files: file desciptor points to every sector/block (file descriptor size fixed). Max file size: size of file descriptor table.
--  
+- Multilevel indexed files: File descriptor table has n-2 or n-1 entries pointing to sectors/blocks and nth or n+1th entry pointing to another file descriptor table (of again n entries)
+-  Max file size = n entries ^ page table directories
+-  Index caching algos? + how are they traversed?
+-  Free block list : to manage free space. use bitmap or linkedlist
