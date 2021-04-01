@@ -1,0 +1,14 @@
+=> Layers: disk->driver->file system->vfs->sys calls->library->user/application
+
+=> Files:
+-  structured or unstructure series of bytes or objects with metadata
+-  open file table : how many open files and all metadata for it (removed when no proc uses that file)
+-  per proc table  : pointer to open file table, current position, access info
+
+=> File operations:
+-  Basic    : create, delete, open, close, read, write, seek, etc.
+-  Metadata : links, attributes, owner, protection
+
+=> On create:
+-  allocate disk space, create description and location on disk with metadata
+-  no file types in unix (left up to program to interpret)
